@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julien Gadonneix – AI Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --border:   #30363d;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+      --accent:   #58a6ff;
+      --accent2:  #3fb950;
+      --accent3:  #d2a8ff;
+      --red:      #f85149;
+      --nav-h:    64px;
+      --radius:   10px;
+      --trans:    0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── Scrollbar ───────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── Nav ─────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex; gap: 1.75rem; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: color var(--trans);
+    }
+
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ─── Hero ────────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
+      max-width: 900px; margin: 0 auto;
+    }
+
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    #hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    #hero h1 span { color: var(--accent); }
+
+    #hero p.tagline {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--trans);
+      text-decoration: none !important;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d1117;
+    }
+    .btn-primary:hover { background: #79b8ff; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-socials {
+      display: flex; gap: 1.5rem; margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-socials a {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: var(--muted); font-size: 0.875rem;
+      transition: color var(--trans);
+    }
+    .hero-socials a:hover { color: var(--text); text-decoration: none; }
+
+    /* ─── Section wrapper ─────────────────────────────────────────────── */
+    section {
+      padding: 5rem 2rem;
+      max-width: 900px; margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    section > h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 900px; margin: 0 auto;
+    }
+
+    /* ─── Timeline ────────────────────────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 160px 1px 1fr;
+      gap: 0 1.5rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .tl-item.visible { opacity: 1; transform: translateY(0); }
+
+    .tl-date {
+      text-align: right;
+      padding-top: 0.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .tl-line {
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .tl-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      flex-shrink: 0;
+      margin-top: 0.35rem;
+    }
+
+    .tl-connector {
+      width: 2px;
+      flex: 1;
+      background: var(--border);
+      margin: 4px 0;
+    }
+
+    .tl-item:last-child .tl-connector { display: none; }
+
+    .tl-body {
+      padding-bottom: 2.5rem;
+    }
+
+    .tl-body h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-body .tl-org {
+      font-size: 0.875rem;
+      color: var(--accent);
+      margin-bottom: 0.15rem;
+    }
+
+    .tl-body .tl-loc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .tl-body p, .tl-body ul {
+      font-size: 0.9rem;
+      color: #c9d1d9;
+    }
+
+    .tl-body ul {
+      padding-left: 1.2rem;
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+
+    .tl-gpa {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      background: rgba(88,166,255,0.12);
+      color: var(--accent);
+      border-radius: 4px;
+      margin-left: 0.5rem;
+    }
+
+    /* ─── Projects ────────────────────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: border-color var(--trans), transform var(--trans);
+      opacity: 0; transform: translateY(20px);
+    }
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .project-card a { color: inherit; text-decoration: none; }
+    .project-card a:hover h3 { color: var(--accent); }
+
+    .project-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color var(--trans);
+    }
+
+    .project-card p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .project-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .lang-badge {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .lang-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+
+    .lang-dot.python  { background: #3572A5; }
+    .lang-dot.jupyter { background: #DA5B0B; }
+    .lang-dot.java    { background: #b07219; }
+    .lang-dot.js      { background: #f1e05a; }
+
+    .stars {
+      font-size: 0.78rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+
+    /* ─── Skills ──────────────────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: #c9d1d9;
+      background: var(--surface);
+    }
+
+    .tag.accent  { border-color: rgba(88,166,255,0.4);  color: var(--accent);  background: rgba(88,166,255,0.08);  }
+    .tag.green   { border-color: rgba(63,185,80,0.4);   color: var(--accent2); background: rgba(63,185,80,0.08);   }
+    .tag.purple  { border-color: rgba(210,168,255,0.4); color: var(--accent3); background: rgba(210,168,255,0.08); }
+
+    /* ─── About strip ─────────────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .about-card h3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    .about-card p {
+      font-size: 0.9rem;
+      color: #c9d1d9;
+      line-height: 1.7;
+    }
+
+    /* ─── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+
+    /* ─── Animations ──────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag, #hero h1, #hero p.tagline, .hero-actions, .hero-socials {
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-tag          { animation-delay: 0.05s; }
+    #hero h1           { animation-delay: 0.15s; }
+    #hero p.tagline    { animation-delay: 0.25s; }
+    .hero-actions      { animation-delay: 0.35s; }
+    .hero-socials      { animation-delay: 0.45s; }
+
+    /* ─── Mobile ──────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .tl-item { grid-template-columns: 0 1px 1fr; }
+      .tl-date { display: none; }
+
+      .about-grid { grid-template-columns: 1fr; }
+
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+  <nav>
+    <span class="nav-brand">julien-gadonneix</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <p class="hero-tag">// PhD Student · AI Researcher · Engineer</p>
+    <h1>Julien<br /><span>Gadonneix</span></h1>
+    <p class="tagline">
+      Deciphering the cerebral bases of language with self-supervised learning.
+      Building AI at the intersection of neuroscience and deep learning.
+    </p>
+    <div class="hero-actions">
+      <a href="CV_Gadonneix.pdf" download class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+      <a href="mailto:juliengado.2001@gmail.com" class="btn btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Get in touch
+      </a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://github.com/julien-gadonneix" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.74-1.33-1.74-1.09-.74.08-.73.08-.73 1.2.08 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.69.83.57C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/JulienGadonneix" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.93v5.68H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM6.9 20.45H3.36V9H6.9v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:juliengado.2001@gmail.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        juliengado.2001@gmail.com
+      </a>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── About ─────────────────────────────────────────────────────────── -->
+  <section id="about">
+    <p class="section-label">01 // about</p>
+    <h2>Who I am</h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Background</h3>
+        <p>
+          I'm a PhD student at Université Paris Cité, investigating the cerebral bases of language
+          using self-supervised learning. Trained as an engineer at École Polytechnique and with an
+          MSc in Biomedical Engineering from Imperial College London, I work at the crossroads of
+          AI, neuroscience, and signal processing.
+        </p>
+      </div>
+      <div class="about-card">
+        <h3>Research interests</h3>
+        <p>
+          Deep learning · Self-supervised learning · EEG &amp; brain signals ·
+          Medical computer vision · Reinforcement learning · Computational neuroscience ·
+          Brain-machine interfaces
+        </p>
+      </div>
+      <div class="about-card">
+        <h3>Contact</h3>
+        <p>
+          📧 <a href="mailto:juliengado.2001@gmail.com">juliengado.2001@gmail.com</a><br/>
+          📞 +33 6 03 57 43 62<br/>
+          📍 Paris, France
+        </p>
+      </div>
+      <div class="about-card">
+        <h3>Beyond the lab</h3>
+        <p>
+          When I'm not training models, you'll find me on a soccer pitch, navigating a sailboat,
+          or chasing powder on a ski slope.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── Education ──────────────────────────────────────────────────────── -->
+  <section id="education">
+    <p class="section-label">02 // education</p>
+    <h2>Academic path</h2>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">Oct 2025 –<br/>Current</div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>PhD – AI &amp; Neuroscience</h3>
+          <div class="tl-org">Université Paris Cité · Hôpital Fondation Adolphe de Rothschild</div>
+          <div class="tl-loc">Paris, France</div>
+          <ul>
+            <li>Deciphering the cerebral bases of language with self-supervised learning.</li>
+            <li>Using AI as both a tool and a model for brain data processing.</li>
+            <li>Supervised by Pierre Bourdillon and Jean-Rémi King.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Sep 2024 –<br/>Sep 2025</div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>MSc Biomedical Engineering <span style="font-weight:400;color:var(--muted)">(Computational)</span></h3>
+          <div class="tl-org">Imperial College London</div>
+          <div class="tl-loc">London, United Kingdom</div>
+          <ul>
+            <li>Research project in deep learning applied to medical images.</li>
+            <li>Coursework: Statistics, Reinforcement Learning, Digital Biosignal Processing, Computer Vision, Brain-Machine Interfaces, Computational Neuroscience.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Sep 2021 –<br/>Sep 2025</div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>Diplôme d'ingénieur <span class="tl-gpa">GPA 3.89 / 4.0</span></h3>
+          <div class="tl-org">École Polytechnique</div>
+          <div class="tl-loc">Palaiseau, France</div>
+          <ul>
+            <li>Specialised in Applied Mathematics, Computer Science, and Computational Biology.</li>
+            <li>Coursework: Algorithm Design, Decision Theory, Neuroscience, Bioinformatics, Machine &amp; Deep Learning, Advanced RL, Autonomous Agents.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Aug 2019 –<br/>Jul 2021</div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>Preparatory Classes PCSI-PC* <span class="tl-gpa">GPA 3.97 / 4.0</span></h3>
+          <div class="tl-org">Lycée privé Sainte-Geneviève</div>
+          <div class="tl-loc">Versailles, France</div>
+          <ul>
+            <li>Two-year intensive program in Mathematics, Physics, and Chemistry leading to top <em>Grandes Écoles</em> entrance exams.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── Experience ─────────────────────────────────────────────────────── -->
+  <section id="experience">
+    <p class="section-label">03 // experience</p>
+    <h2>Work experience</h2>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">Jan 2025 –<br/>Sep 2025</div>
+        <div class="tl-line"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>AI Research Scientist Intern – Medical Computer Vision</h3>
+          <div class="tl-org">Imperial College London · Department of Bioengineering</div>
+          <div class="tl-loc">London, United Kingdom</div>
+          <ul>
+            <li>Implemented state-of-the-art deep learning architectures for medical images of eczema.</li>
+            <li>Data-efficient fine-tuning of large pre-trained foundation models and pre-training from scratch.</li>
+            <li>Uncertainty calibration using generative models, supervised by Prof. Reiko Tanaka.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Mar 2024 –<br/>Jul 2024</div>
+        <div class="tl-line"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>AI Research Scientist Intern – Applied Neuroscience</h3>
+          <div class="tl-org">Biomedical Signal Processing Lab · DTU</div>
+          <div class="tl-loc">Copenhagen, Denmark</div>
+          <ul>
+            <li>Developed deep learning models and signal processing techniques for EEG analysis.</li>
+            <li>Achieved state-of-the-art performance on emotion recognition from EEG signals.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Jun 2023 –<br/>Aug 2023</div>
+        <div class="tl-line"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>Software Developer &amp; Neuro-Engineering Intern</h3>
+          <div class="tl-org">g.tec medical engineering GmbH</div>
+          <div class="tl-loc">Schiedlberg, Austria</div>
+          <ul>
+            <li>Data analysis and signal processing on EEG signals.</li>
+            <li>Designed API for data processing pipelines.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Sep 2021 –<br/>Apr 2022</div>
+        <div class="tl-line"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-connector"></div></div>
+        <div class="tl-body">
+          <h3>Firefighter</h3>
+          <div class="tl-org">Marseille Fire Brigade</div>
+          <div class="tl-loc">Marseille, France</div>
+          <ul>
+            <li>Trained at the Marine Firefighting Academy for two months.</li>
+            <li>Worked as vehicle crew member and first responder.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── Projects ───────────────────────────────────────────────────────── -->
+  <section id="projects">
+    <p class="section-label">04 // projects</p>
+    <h2>Selected projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/Models_EEG_EmotionRecognition" target="_blank" rel="noopener">
+          <h3>EEG Emotion Recognition</h3>
+        </a>
+        <p>Deep learning models with signal processing for EEG-based emotion classification. Achieved state-of-the-art performance during DTU internship.</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot python"></span>Python</span>
+          <span class="stars">★ 1</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/RL4Trading" target="_blank" rel="noopener">
+          <h3>RL4Trading</h3>
+        </a>
+        <p>Reinforcement learning algorithms for financial data analysis. Advanced architectures and agents for trading strategy discovery.</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot jupyter"></span>Jupyter Notebook</span>
+          <span class="stars">★ 1</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/PPO_in_10min" target="_blank" rel="noopener">
+          <h3>PPO in 10 min</h3>
+        </a>
+        <p>Clean, concise PPO implementation — all you need to know about Proximal Policy Optimization (80/20 rule applied).</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot python"></span>Python</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/LargeParsimony" target="_blank" rel="noopener">
+          <h3>Large Parsimony</h3>
+        </a>
+        <p>Bioinformatics project solving the large parsimony problem to construct phylogenetic trees from DNA data.</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot jupyter"></span>Jupyter Notebook</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/RushHour" target="_blank" rel="noopener">
+          <h3>Rush Hour Solver</h3>
+        </a>
+        <p>Algorithms and heuristics to optimally solve Rush Hour puzzles — optimal path-finding with advanced search strategies.</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot java"></span>Java</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/BrainADProtein" target="_blank" rel="noopener">
+          <h3>Brain AD Protein</h3>
+        </a>
+        <p>Interactive visualisation of protein distribution in Alzheimer's patient brains, built with JavaScript and D3.</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot js"></span>JavaScript</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <a href="https://github.com/julien-gadonneix/UtteranceImportance" target="_blank" rel="noopener">
+          <h3>Utterance Importance</h3>
+        </a>
+        <p>ML and DL models for binary classification of important utterances in professional dialogues.</p>
+        <div class="project-card-footer">
+          <span class="lang-badge"><span class="lang-dot jupyter"></span>Jupyter Notebook</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─── Skills ─────────────────────────────────────────────────────────── -->
+  <section id="skills">
+    <p class="section-label">05 // skills</p>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <h3>AI / ML</h3>
+        <div class="skill-tags">
+          <span class="tag accent">Deep Learning</span>
+          <span class="tag accent">Self-supervised</span>
+          <span class="tag accent">Reinforcement Learning</span>
+          <span class="tag accent">Computer Vision</span>
+          <span class="tag accent">Signal Processing</span>
+          <span class="tag accent">NLP</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Programming</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">Java</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">Kotlin</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Frameworks &amp; Tools</h3>
+        <div class="skill-tags">
+          <span class="tag green">PyTorch</span>
+          <span class="tag green">AWS</span>
+          <span class="tag green">ROS</span>
+          <span class="tag green">AMPL</span>
+          <span class="tag green">Rhino</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="skill-tags">
+          <span class="tag purple">French — native</span>
+          <span class="tag purple">English — TOEFL 106</span>
+          <span class="tag purple">Spanish — intermediate</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Footer ─────────────────────────────────────────────────────────── -->
+  <footer>
+    <p>
+      Built by Julien Gadonneix ·
+      <a href="https://github.com/julien-gadonneix/julien-gadonneix.github.io" target="_blank" rel="noopener">Source</a>
+    </p>
+  </footer>
+
+  <!-- ─── Scroll animations ──────────────────────────────────────────────── -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.tl-item, .project-card').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
