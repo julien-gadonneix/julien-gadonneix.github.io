@@ -262,99 +262,56 @@
       margin-left: 0.5rem;
     }
 
-    /* ─── Projects ────────────────────────────────────────────────────── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    /* ─── Publications ────────────────────────────────────────────────── */
+    .pub-list {
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
     }
 
-    .project-card {
+    .pub-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.25rem 1.5rem;
-      display: flex; flex-direction: column; gap: 0.6rem;
-      transition: border-color var(--trans), transform var(--trans);
-      opacity: 0; transform: translateY(20px);
-    }
-    .project-card.visible { opacity: 1; transform: translateY(0); }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-    .project-card a { color: inherit; text-decoration: none; }
-    .project-card a:hover h3 { color: var(--accent); }
-
-    .project-card h3 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      transition: color var(--trans);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color var(--trans);
     }
 
-    .project-card p {
-      font-size: 0.83rem;
-      color: var(--muted);
-      flex: 1;
+    .pub-card:hover { border-color: var(--accent); }
+
+    .pub-citation {
+      font-size: 0.9rem;
+      color: #c9d1d9;
+      line-height: 1.7;
     }
 
-    .project-card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 0.5rem;
+    .pub-citation em { color: var(--muted); }
+
+    .pub-links {
+      display: flex;
+      gap: 0.5rem;
     }
 
-    .lang-badge {
-      display: flex; align-items: center; gap: 0.35rem;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .lang-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-    }
-
-    .lang-dot.python  { background: #3572A5; }
-    .lang-dot.jupyter { background: #DA5B0B; }
-    .lang-dot.java    { background: #b07219; }
-    .lang-dot.js      { background: #f1e05a; }
-
-    .stars {
-      font-size: 0.78rem; color: var(--muted);
-      display: flex; align-items: center; gap: 0.3rem;
-    }
-
-    /* ─── Skills ──────────────────────────────────────────────────────── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .skill-group h3 {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
-    }
-
-    .skill-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-    }
-
-    .tag {
+    .pub-link {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.78rem;
-      padding: 0.25rem 0.6rem;
+      padding: 0.2rem 0.6rem;
       border-radius: 4px;
-      border: 1px solid var(--border);
-      color: #c9d1d9;
-      background: var(--surface);
+      border: 1px solid rgba(88,166,255,0.4);
+      color: var(--accent);
+      background: rgba(88,166,255,0.08);
+      text-decoration: none;
+      transition: background var(--trans), border-color var(--trans);
     }
 
-    .tag.accent  { border-color: rgba(88,166,255,0.4);  color: var(--accent);  background: rgba(88,166,255,0.08);  }
-    .tag.green   { border-color: rgba(63,185,80,0.4);   color: var(--accent2); background: rgba(63,185,80,0.08);   }
-    .tag.purple  { border-color: rgba(210,168,255,0.4); color: var(--accent3); background: rgba(210,168,255,0.08); }
+    .pub-link:hover {
+      background: rgba(88,166,255,0.18);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
 
     /* ─── About strip ─────────────────────────────────────────────────── */
     .about-grid {
@@ -432,8 +389,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
+      <li><a href="#publications">Publications</a></li>
     </ul>
   </nav>
 
@@ -650,138 +606,20 @@
 
   <div class="section-divider"></div>
 
-  <!-- ─── Projects ───────────────────────────────────────────────────────── -->
-  <section id="projects">
-    <p class="section-label">04 // projects</p>
-    <h2>Selected projects</h2>
-    <div class="projects-grid">
+  <!-- ─── Publications ──────────────────────────────────────────────────── -->
+  <section id="publications">
+    <p class="section-label">04 // publications</p>
+    <h2>Publications</h2>
+    <div class="pub-list">
 
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/Models_EEG_EmotionRecognition" target="_blank" rel="noopener">
-          <h3>EEG Emotion Recognition</h3>
-        </a>
-        <p>Deep learning models with signal processing for EEG-based emotion classification. Achieved state-of-the-art performance during DTU internship.</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot python"></span>Python</span>
-          <span class="stars">★ 1</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/RL4Trading" target="_blank" rel="noopener">
-          <h3>RL4Trading</h3>
-        </a>
-        <p>Reinforcement learning algorithms for financial data analysis. Advanced architectures and agents for trading strategy discovery.</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot jupyter"></span>Jupyter Notebook</span>
-          <span class="stars">★ 1</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/PPO_in_10min" target="_blank" rel="noopener">
-          <h3>PPO in 10 min</h3>
-        </a>
-        <p>Clean, concise PPO implementation — all you need to know about Proximal Policy Optimization (80/20 rule applied).</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot python"></span>Python</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/LargeParsimony" target="_blank" rel="noopener">
-          <h3>Large Parsimony</h3>
-        </a>
-        <p>Bioinformatics project solving the large parsimony problem to construct phylogenetic trees from DNA data.</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot jupyter"></span>Jupyter Notebook</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/RushHour" target="_blank" rel="noopener">
-          <h3>Rush Hour Solver</h3>
-        </a>
-        <p>Algorithms and heuristics to optimally solve Rush Hour puzzles — optimal path-finding with advanced search strategies.</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot java"></span>Java</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/BrainADProtein" target="_blank" rel="noopener">
-          <h3>Brain AD Protein</h3>
-        </a>
-        <p>Interactive visualisation of protein distribution in Alzheimer's patient brains, built with JavaScript and D3.</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot js"></span>JavaScript</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <a href="https://github.com/julien-gadonneix/UtteranceImportance" target="_blank" rel="noopener">
-          <h3>Utterance Importance</h3>
-        </a>
-        <p>ML and DL models for binary classification of important utterances in professional dialogues.</p>
-        <div class="project-card-footer">
-          <span class="lang-badge"><span class="lang-dot jupyter"></span>Jupyter Notebook</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ─── Skills ─────────────────────────────────────────────────────────── -->
-  <section id="skills">
-    <p class="section-label">05 // skills</p>
-    <h2>Skills</h2>
-    <div class="skills-grid">
-
-      <div class="skill-group">
-        <h3>AI / ML</h3>
-        <div class="skill-tags">
-          <span class="tag accent">Deep Learning</span>
-          <span class="tag accent">Self-supervised</span>
-          <span class="tag accent">Reinforcement Learning</span>
-          <span class="tag accent">Computer Vision</span>
-          <span class="tag accent">Signal Processing</span>
-          <span class="tag accent">NLP</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <h3>Programming</h3>
-        <div class="skill-tags">
-          <span class="tag">Python</span>
-          <span class="tag">C++</span>
-          <span class="tag">Java</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">TypeScript</span>
-          <span class="tag">SQL</span>
-          <span class="tag">MATLAB</span>
-          <span class="tag">Kotlin</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <h3>Frameworks &amp; Tools</h3>
-        <div class="skill-tags">
-          <span class="tag green">PyTorch</span>
-          <span class="tag green">AWS</span>
-          <span class="tag green">ROS</span>
-          <span class="tag green">AMPL</span>
-          <span class="tag green">Rhino</span>
-        </div>
-      </div>
-
-      <div class="skill-group">
-        <h3>Languages</h3>
-        <div class="skill-tags">
-          <span class="tag purple">French — native</span>
-          <span class="tag purple">English — TOEFL 106</span>
-          <span class="tag purple">Spanish — intermediate</span>
+      <div class="pub-card">
+        <p class="pub-citation">
+          Gadonneix, J., Zhang, M., Rapin, J., Evanson, L., Bourdillon, P., &amp; King, J. R. (2026).
+          Temporal structure of the language hierarchy within small cortical patches.
+          <em>arXiv preprint</em> arXiv:2604.03021.
+        </p>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2604.03021" target="_blank" rel="noopener" class="pub-link">arXiv</a>
         </div>
       </div>
 
@@ -802,7 +640,7 @@
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
       { threshold: 0.12 }
     );
-    document.querySelectorAll('.tl-item, .project-card').forEach(el => observer.observe(el));
+    document.querySelectorAll('.tl-item').forEach(el => observer.observe(el));
   </script>
 
 </body>
