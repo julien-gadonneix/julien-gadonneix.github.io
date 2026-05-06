@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Julien Gadonneix – AI Researcher</title>
+  <link rel="icon" type="image/png" href="logo.png" sizes="32x32" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -81,6 +82,30 @@
       display: flex; flex-direction: column; justify-content: center;
       padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
       max-width: 900px; margin: 0 auto;
+    }
+
+    .hero-inner {
+      display: flex; align-items: center; gap: 3.5rem;
+    }
+
+    .hero-avatar {
+      flex-shrink: 0;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 32px rgba(88,166,255,0.25);
+    }
+
+    .hero-avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .hero-content { flex: 1; }
+
+    @media (max-width: 620px) {
+      .hero-inner { flex-direction: column; align-items: flex-start; gap: 2rem; }
+      .hero-avatar { width: 120px; height: 120px; }
     }
 
     .hero-tag {
@@ -395,21 +420,28 @@
 
   <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
   <section id="hero">
-    <p class="hero-tag">// PhD Student · AI Researcher · Engineer</p>
-    <h1>Julien<br /><span>Gadonneix</span></h1>
-    <p class="tagline">
-      Deciphering the cerebral bases of language with self-supervised learning.
-      Building AI at the intersection of neuroscience and deep learning.
-    </p>
-    <div class="hero-actions">
-      <a href="CV_Gadonneix.pdf" download class="btn btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download CV
-      </a>
-      <a href="mailto:juliengado.2001@gmail.com" class="btn btn-outline">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        Get in touch
-      </a>
+    <div class="hero-inner">
+      <div class="hero-avatar">
+        <img src="logo.png" alt="Julien Gadonneix" width="180" height="180" />
+      </div>
+      <div class="hero-content">
+        <p class="hero-tag">// PhD Student · AI Researcher · Engineer</p>
+        <h1>Julien<br /><span>Gadonneix</span></h1>
+        <p class="tagline">
+          Deciphering the cerebral bases of language with self-supervised learning.
+          Building AI at the intersection of neuroscience and deep learning.
+        </p>
+        <div class="hero-actions">
+          <a href="CV_Gadonneix.pdf" download class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
+          </a>
+          <a href="mailto:juliengado.2001@gmail.com" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Get in touch
+          </a>
+        </div>
+      </div>
     </div>
     <div class="hero-socials">
       <a href="https://github.com/julien-gadonneix" target="_blank" rel="noopener">
